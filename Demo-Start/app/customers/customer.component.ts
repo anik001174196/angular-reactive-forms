@@ -22,11 +22,28 @@ export class CustomerComponent  implements OnInit{
           //  lastName:{value:'n/a', disabled: true},
             lastName: ['', [Validators.required, Validators.maxLength(50)]],
             email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+')]],
-            sendCatalog: true
+            sendCatalog: true,
+            phone:'',
+            notification: 'email'
         });
         
         
        
+    }
+
+
+    setNotificaiton(notifyVia: string) {
+        const phoneControl = this.customerForm.get('phone');
+        const emailControl = this.customerForm.get('email');
+        if(notifyVia === 'text') {
+            phoneControl.setValidators(Validators.required);
+            emailControl.clearValidators();
+        } else {
+            phoneControl.clearValidators();
+            emailControl.setValidators(Validators.required);
+        }
+        phoneControl.updateValueAndValidity();
+        emailControl.updateValueAndValidity();
     }
      
     save() {
@@ -40,7 +57,8 @@ export class CustomerComponent  implements OnInit{
            firstName: 'Anik',
            lastName: 'Saha',
            email: 'anik.sahaa@fundserv.com',
-           sendCatalog: false
+           sendCatalog: false,
+           phone:''
        });
     }
 
