@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 
 import { Customer } from './customer';
+import { isString } from 'util';
 
-function ratingRange(c: AbstractControl) : {[key: string]: boolean} | null {
-    if (c.value  && (isNaN(c.value ) || (c.value <1 || c.value > 5))
-    ) {
-       return {'range': true};
-    }
-    return null;
-};
+
+function ratingRange(min: number, max:number) : ValidatorFn {
+    return (c: AbstractControl): {[key: string]: boolean} | null  => {
+       
+        if (!!c.value   && (isNaN(c.value)||(c.value < min || c.value > max))) {
+            return {'range': true};
+        };
+        return null;
+    };
+}
+
 
 
 
@@ -36,7 +41,7 @@ export class CustomerComponent  implements OnInit{
             sendCatalog: true,
             phone:'',
             notification: 'email',
-            rating: ['', ratingRange]
+            rating: ['', ratingRange(1,5)]
         });
         
         
