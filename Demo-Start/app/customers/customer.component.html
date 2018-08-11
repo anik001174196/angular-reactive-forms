@@ -54,7 +54,8 @@
                     </div>
                 </div>
 
-                <div formGroupName="emailGroup">
+                <div formGroupName="emailGroup"
+                     [ngClass]="{'has-error': customerForm.get('emailGroup').errors}">
                     <div class="form-group"
                         [ngClass]="{'has-error': (customerForm.get('emailGroup.email').touched ||
                                                  customerForm.get('emailGroup.email').dirty) && 
@@ -107,17 +108,18 @@
                                 />
                             <span class="help-block" *ngIf="(customerForm.get('emailGroup.confirmEmail').touched ||
                                                             customerForm.get('emailGroup.confirmEmail').dirty) &&
-                                                            customerForm.get('emailGroup.confirmEmail').errors">
-                                <span *ngIf="customerForm.get('emailGroup.confirmEmail').errors.required">
+                                                            (customerForm.get('emailGroup.confirmEmail').errors ||
+                                                            customerForm.get('emailGroup').errors)">
+                                <span *ngIf="customerForm.get('emailGroup.confirmEmail').errors?.required">
                                     Please enter your email address.
                                 </span>
-                                <span *ngIf="customerForm.get('emailGroup.confirmEmail').errors.pattern">
+                                <span *ngIf="customerForm.get('emailGroup.confirmEmail').errors?.pattern">
                                     Please enter a valid email address.
                                 </span>
 
                                 <!-- This one does not work -->
-                                <span *ngIf="customerForm.get('emailGroup.confirmEmail').errors.email">
-                                    Please enter a valid email address.
+                                <span *ngIf="customerForm.get('emailGroup').errors?.match">
+                                        Email Adresses do not match.
                                 </span>
                             </span>
                         </div>
