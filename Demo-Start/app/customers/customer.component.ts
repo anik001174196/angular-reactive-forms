@@ -42,9 +42,9 @@ export class CustomerComponent  implements OnInit{
         pattern: 'Please enter a valid email address.'
     };
 
-    get addresses(): FormArray{
-        return <FormArray> this.customerForm.get('addresses');
-    } 
+    get addresses(): FormArray {
+        return <FormArray>this.customerForm.get('addresses');
+      }
 
     constructor(private fb: FormBuilder) {
 
@@ -63,7 +63,7 @@ export class CustomerComponent  implements OnInit{
             phone:'',
             notification: 'email',
             rating: ['', ratingRange(1,5)],
-            addresses: this.fb.array([this.buildAddress()]) 
+            addresses: this.fb.array([this.buildAddress()])
             
             
         });
@@ -85,6 +85,10 @@ export class CustomerComponent  implements OnInit{
             state: '',
             zip: ''
         });
+    }
+
+    addAddress() {
+        this.addresses.push(this.buildAddress());
     }
     setMessage(c: AbstractControl) : void {
         this.emailMessage = '';
