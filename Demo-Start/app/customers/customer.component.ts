@@ -59,12 +59,8 @@ export class CustomerComponent  implements OnInit{
             phone:'',
             notification: 'email',
             rating: ['', ratingRange(1,5)],
-            addressType: 'home',
-            street1: '',
-            street2: '',
-            city: '',
-            state: '',
-            zip: ''
+            addresses: this.buildAddress()
+            
         });
         
         this.customerForm.get('notification')
@@ -75,6 +71,16 @@ export class CustomerComponent  implements OnInit{
        
     }
 
+    buildAddress(): FormGroup{
+       return this.fb.group({
+            addressType: 'home',
+            street1: '',
+            street2: '',
+            city: '',
+            state: '',
+            zip: ''
+        });
+    }
     setMessage(c: AbstractControl) : void {
         this.emailMessage = '';
         if((c.touched || c.dirty) && c.errors) {
